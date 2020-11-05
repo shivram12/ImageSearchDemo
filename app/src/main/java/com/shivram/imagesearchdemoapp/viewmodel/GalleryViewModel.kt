@@ -20,6 +20,10 @@ class GalleryViewModel @ViewModelInject constructor( private val repository: Uns
         repository.getSearchResults(queryString).cachedIn(viewModelScope)
     }
 
+    fun searchPhotos(query: String) {
+        currentQuery.value = query
+    }
+
     companion object {
         private const val DEFAULT_QUERY = "cats"
         private const val TAG = "viemodle"

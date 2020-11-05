@@ -13,7 +13,7 @@ import com.shivram.imagesearchdemoapp.R
 import com.shivram.imagesearchdemoapp.model.PhotoModel
 import com.shivram.imagesearchdemoapp.databinding.ItemPhotoBinding
 
-class UnsplashPhotoAdapter :
+class UnsplashPhotoAdapter (private val listener:onItemClickListener):
     PagingDataAdapter<PhotoModel, UnsplashPhotoAdapter.PhotoViewHolder>(PHOTO_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
@@ -31,9 +31,22 @@ class UnsplashPhotoAdapter :
         }
     }
 
-    class PhotoViewHolder(private val binding: ItemPhotoBinding) :
+   inner class PhotoViewHolder(private val binding: ItemPhotoBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        
+
+        init {
+            binding.root.setOnClickListener {
+                val position = bindingAdapterPosition
+
+                if (position!=RecyclerView.NO_POSITION){
+                    val item = getItem(position)
+                    if(item!=null){
+                        listener.onItemClick(item)
+                    }
+                }
+
+            }
+        }
         
         fun bind(photo: PhotoModel) {
             binding.apply {
@@ -50,6 +63,9 @@ class UnsplashPhotoAdapter :
         }
     }
 
+    interface onItemClickListener{
+        fun onItemClick(photo: PhotoModel)
+    }
     companion object {
         private val PHOTO_COMPARATOR = object : DiffUtil.ItemCallback<PhotoModel>() {
             override fun areItemsTheSame(oldItem: PhotoModel, newItem: PhotoModel) =

@@ -3,10 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/galleryFragment2">
+    app:startDestination="@id/galleryFragment">
+
     <fragment
-        android:id="@+id/galleryFragment2"
+        android:id="@+id/galleryFragment"
         android:name="com.shivram.imagesearchdemoapp.ui.gallery.fragment.GalleryFragment"
-        android:label="fragment_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:label="ImageSearchDemo"
+        tools:layout="@layout/fragment_gallery">
+        <action
+            android:id="@+id/action_galleryFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.shivram.imagesearchdemoapp.ui.gallery.details.GalleryDetailsFragment"
+        android:label="Gallery Details"
+        tools:layout="@layout/fragment_details">
+        <argument
+            android:name="photo"
+            app:argType="com.shivram.imagesearchdemoapp.model.PhotoModel" />
+    </fragment>
 </navigation>
